@@ -1,5 +1,15 @@
 const questions = [
   {
+    titre: "[Nom]",
+    texte: "Es-tu prêt à découvrir quel type de personne tu es ?",
+    reponses: [
+      "Bien sûr que oui !",
+      "Oui",
+      "Carrément !"
+    ],
+    type: "radio"
+  },
+  {
     titre: "Question 1",
     texte: "Lequel des appareils connectés possédez-vous actuellement ?",
     reponses: [
@@ -38,7 +48,19 @@ const questions = [
 ];
 
 const adImages = [
-
+  "assets/img/864.jpg",
+  "assets/img/1023.jpg",
+  "assets/img/1104.jpg",
+  "assets/img/18966674.jpg",
+  "assets/img/18969441.jpg",
+  "assets/img/36783.jpg",
+  "assets/img/18935571.jpg",
+  "assets/img/36802.jpg",
+  "assets/img/18966730.jpg",
+  "assets/img/1026.jpg",
+  "assets/img/867.jpg",
+  "assets/img/18966824.jpg",
+  "assets/img/863.jpg"
 ];
 
 let indexQuestion = 0;
@@ -62,9 +84,40 @@ const userNameDisplay   = document.getElementById("user-name-display");
 
 const adImage           = document.getElementById("ad-image");
 
-introButton.addEventListener("click", () => {
-  introScreen.classList.add("fade-out");
+const bgMusic           = document.getElementById("bg-music");
+const volumeSlider      = document.getElementById("volume-slider");
 
+const clickSound        = document.getElementById("click-sound");
+const typingSound       = document.getElementById("typing-sound");
+
+function playClickSound() {
+  clickSound.currentTime = 0;
+  clickSound.play();
+}
+
+function playTypingSound() {
+  typingSound.currentTime = 0;
+  typingSound.play();
+}
+
+volumeSlider.addEventListener("input", () => {
+  bgMusic.volume = volumeSlider.value;
+});
+
+inputNom.addEventListener("keydown", playTypingSound);
+
+introButton.addEventListener("click", () => {
+  playClickSound();
+
+  bgMusic.play().catch((err) => {
+    console.log("Lecture audio bloquée :", err);
+  });
+
+  if (adImages.length > 0) {
+    adImage.src = adImages[0];
+  }
+
+  introScreen.classList.add("fade-out");
   setTimeout(() => {
     introScreen.classList.add("hidden");
     introScreen.classList.remove("fade-out");
@@ -74,6 +127,7 @@ introButton.addEventListener("click", () => {
 });
 
 validateNameBtn.addEventListener("click", () => {
+  playClickSound();
   nomUtilisateur = inputNom.value.trim();
   if (nomUtilisateur === "") {
     alert("Veuillez saisir votre nom pour continuer.");
@@ -81,26 +135,23 @@ validateNameBtn.addEventListener("click", () => {
   }
 
   nameScreen.classList.add("fade-out");
-
   setTimeout(() => {
     nameScreen.classList.add("hidden");
     nameScreen.classList.remove("fade-out");
 
     questionsScreen.classList.remove("hidden");
-
     afficherQuestion(indexQuestion);
   }, 500);
 });
 
 nextButton.addEventListener("click", () => {
+  playClickSound();
   const reponsesSelectionnees = getSelectedAnswers();
   console.log(`Réponses question ${indexQuestion + 1} :`, reponsesSelectionnees);
 
   questionsScreen.classList.add("fade-out");
-
   setTimeout(() => {
     questionsScreen.classList.remove("fade-out");
-
     indexQuestion++;
     if (indexQuestion < questions.length) {
       afficherQuestion(indexQuestion);
@@ -112,7 +163,13 @@ nextButton.addEventListener("click", () => {
 
 function afficherQuestion(indice) {
   const questionActuelle = questions[indice];
-  questionTitle.textContent = questionActuelle.titre;
+  
+  if (indice === 0) {
+    questionTitle.textContent = nomUtilisateur + "...";
+  } else {
+    questionTitle.textContent = questionActuelle.titre;
+  }
+  
   questionText.textContent  = questionActuelle.texte;
 
   answersContainer.innerHTML = "";
@@ -126,14 +183,15 @@ function afficherQuestion(indice) {
     input.name = "question_" + indice; 
     input.value = reponse;
 
-    const textNode = document.createTextNode(" " + reponse);
+    input.addEventListener("click", playClickSound);
 
+    const textNode = document.createTextNode(" " + reponse);
     label.appendChild(input);
     label.appendChild(textNode);
     answersContainer.appendChild(label);
   });
 
-  adImage.src = adImages[indice % adImages.length];
+  adImage.src = adImages[(indice + 1) % adImages.length];
 }
 
 function getSelectedAnswers() {
@@ -149,7 +207,6 @@ function getSelectedAnswers() {
 
 function afficherEcranFinal() {
   questionsScreen.classList.add("hidden");
-
   userNameDisplay.textContent = nomUtilisateur;
   endScreen.classList.remove("hidden");
 }

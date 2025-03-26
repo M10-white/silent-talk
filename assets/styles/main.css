@@ -12,14 +12,13 @@
   ------------------------------------------------------------------ */
 body {
     font-family: "Georgia", serif;
-    /* Police à l'allure plus vintage */
     background-color: #f8f4ec;
-    /* Couleur de fond légèrement jaunie */
     color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    position: relative;
 }
 
 /* ------------------------------------------------------------------
@@ -30,8 +29,8 @@ body {
     max-width: 1200px;
     width: 100%;
     padding: 20px;
-    align-items: flex-start;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-around;
 }
 
 /* ------------------------------------------------------------------
@@ -39,30 +38,24 @@ body {
   ------------------------------------------------------------------ */
 #quiz-container {
     width: 600px;
-    /* Largeur fixe pour un rendu "boîte" */
     min-height: 500px;
-    /* Hauteur minimale */
     background-color: #fff;
     border: 2px solid #999;
     border-radius: 4px;
     padding: 30px;
     margin-right: 20px;
-    /* Pour séparer du conteneur pub */
     box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
     position: relative;
 }
 
-/* 
-     Chaque "screen" est un écran distinct : 
-     intro, name, questions, end 
-  */
+/* ------------------------------------------------------------------
+     Écrans (intro, nom, questions, fin)
+  ------------------------------------------------------------------ */
 .screen {
     width: 100%;
-    height: auto;
     text-align: center;
 }
 
-/* Masque l'écran quand on ajoute la classe hidden */
 .hidden {
     display: none;
 }
@@ -72,7 +65,6 @@ body {
   ------------------------------------------------------------------ */
 h1, h2 {
     color: #b32b2b;
-    /* Un rouge rétro */
     margin-bottom: 15px;
 }
 
@@ -89,7 +81,6 @@ button {
     color: #fff;
     border: none;
     padding: 10px 20px;
-    font-family: inherit;
     cursor: pointer;
     border-radius: 4px;
     margin-top: 10px;
@@ -152,6 +143,12 @@ input[type="text"] {
     border: 1px solid #ccc;
 }
 
+#ad-container h2 {
+    font-size: 1.2em;
+    opacity: 0.7;
+    margin-top: 8px;
+}
+
 /* ------------------------------------------------------------------
      Animation fade
   ------------------------------------------------------------------ */
@@ -162,4 +159,22 @@ input[type="text"] {
 
 .fade-out {
     opacity: 0;
+}
+
+/* ------------------------------------------------------------------
+     Contrôle du volume (en bas à droite)
+  ------------------------------------------------------------------ */
+#volume-control {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #fff;
+    border: 2px solid #999;
+    border-radius: 4px;
+    padding: 8px;
+    font-family: "Georgia", serif;
+}
+
+#volume-slider {
+    width: 100px;
 }

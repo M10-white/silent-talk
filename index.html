@@ -3,20 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Quiz Vintage</title>
+  <title>Quiz Personnalité</title>
   <link rel="stylesheet" href="assets/styles/main.css" />
 </head>
 <body>
-
   <div id="main-container">
-
     <div id="quiz-container">
       
       <div id="intro-screen" class="screen">
         <h1>Bienvenue !</h1>
         <p>
-          Nous avons déterré un ancien quiz de personnalité qui devrait vous amuser.  
-          Il ne vous prendra qu’une dizaine de minutes.  
+          Nous avons déterré un ancien quiz de personnalité qui devrait vous amuser.
+          Il ne vous prendra qu’une dizaine de minutes.
         </p>
         <p>Prêt à découvrir de quoi il s’agit ?</p>
         <button id="intro-button">Commencer</button>
@@ -29,7 +27,7 @@
         <button id="validate-name-button">Valider</button>
       </div>
 
-      <div id="questions-screen" class="screen hidden fade">
+      <div id="questions-screen" class="screen hidden">
         <h2 id="question-title"></h2>
         <p id="question-text"></p>
         <div id="answers-container"></div>
@@ -40,13 +38,21 @@
         <h2>Merci pour votre participation, <span id="user-name-display"></span> !</h2>
         <p>Nous espérons que ce quiz vous a plu.</p>
       </div>
-
     </div>
 
     <div id="ad-container">
-      <img id="ad-image" src="img/ad1.jpg" alt="Publicité" />
+      <img id="ad-image" src="assets/img/18969441.jpg" alt="Publicité" />
+      <h2>Publicité</h2>
     </div>
+  </div>
 
+  <audio id="bg-music" src="assets/audio/bg.mp3" loop></audio>
+  <audio id="click-sound" src="assets/audio/click.mp3"></audio>
+  <audio id="typing-sound" src="assets/audio/typing.mp3"></audio>
+
+  <div id="volume-control">
+    <label for="volume-slider">Volume&nbsp;:</label>
+    <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="1">
   </div>
 
   <script src="assets/scripts/main.js"></script>
