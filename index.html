@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz Vintage</title>
+  <link rel="stylesheet" href="assets/styles/main.css" />
+</head>
+<body>
+
+  <div id="main-container">
+
+    <div id="quiz-container">
+      
+      <div id="intro-screen" class="screen">
+        <h1>Bienvenue !</h1>
+        <p>
+          Nous avons déterré un ancien quiz de personnalité qui devrait vous amuser.  
+          Il ne vous prendra qu’une dizaine de minutes.  
+        </p>
+        <p>Prêt à découvrir de quoi il s’agit ?</p>
+        <button id="intro-button">Commencer</button>
+      </div>
+
+      <div id="name-screen" class="screen hidden fade">
+        <h2>Avant de commencer...</h2>
+        <p>Veuillez entrer votre nom :</p>
+        <input type="text" id="user-name" placeholder="Votre nom..." />
+        <button id="validate-name-button">Valider</button>
+      </div>
+
+      <div id="questions-screen" class="screen hidden fade">
+        <h2 id="question-title"></h2>
+        <p id="question-text"></p>
+        <div id="answers-container"></div>
+        <button id="next-button">Suivant</button>
+      </div>
+
+      <div id="end-screen" class="screen hidden fade">
+        <h2>Merci pour votre participation, <span id="user-name-display"></span> !</h2>
+        <p>Nous espérons que ce quiz vous a plu.</p>
+      </div>
+
+    </div>
+
+    <div id="ad-container">
+      <img id="ad-image" src="img/ad1.jpg" alt="Publicité" />
+    </div>
+
+  </div>
+
+  <script src="assets/scripts/main.js"></script>
+</body>
+</html>

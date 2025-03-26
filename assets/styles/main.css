@@ -1,0 +1,165 @@
+/* ------------------------------------------------------------------
+   Réinitialisation basique
+------------------------------------------------------------------ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ------------------------------------------------------------------
+     Corps de la page
+  ------------------------------------------------------------------ */
+body {
+    font-family: "Georgia", serif;
+    /* Police à l'allure plus vintage */
+    background-color: #f8f4ec;
+    /* Couleur de fond légèrement jaunie */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* ------------------------------------------------------------------
+     Conteneur principal
+  ------------------------------------------------------------------ */
+#main-container {
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    padding: 20px;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+/* ------------------------------------------------------------------
+     Conteneur du quiz
+  ------------------------------------------------------------------ */
+#quiz-container {
+    width: 600px;
+    /* Largeur fixe pour un rendu "boîte" */
+    min-height: 500px;
+    /* Hauteur minimale */
+    background-color: #fff;
+    border: 2px solid #999;
+    border-radius: 4px;
+    padding: 30px;
+    margin-right: 20px;
+    /* Pour séparer du conteneur pub */
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* 
+     Chaque "screen" est un écran distinct : 
+     intro, name, questions, end 
+  */
+.screen {
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
+
+/* Masque l'écran quand on ajoute la classe hidden */
+.hidden {
+    display: none;
+}
+
+/* ------------------------------------------------------------------
+     Titres et paragraphes
+  ------------------------------------------------------------------ */
+h1, h2 {
+    color: #b32b2b;
+    /* Un rouge rétro */
+    margin-bottom: 15px;
+}
+
+p {
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+/* ------------------------------------------------------------------
+     Boutons et champs
+  ------------------------------------------------------------------ */
+button {
+    background-color: #b32b2b;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #9c2424;
+}
+
+input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* ------------------------------------------------------------------
+     Écran de questions
+  ------------------------------------------------------------------ */
+#questions-screen {
+    text-align: left;
+}
+
+#question-title {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#question-text {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#answers-container {
+    margin-bottom: 20px;
+}
+
+.answer-option {
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* ------------------------------------------------------------------
+     Écran final
+  ------------------------------------------------------------------ */
+#end-screen {
+    text-align: center;
+}
+
+/* ------------------------------------------------------------------
+     Conteneur publicité
+  ------------------------------------------------------------------ */
+#ad-container {
+    width: 250px;
+    text-align: center;
+}
+
+#ad-container img {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+}
+
+/* ------------------------------------------------------------------
+     Animation fade
+  ------------------------------------------------------------------ */
+.fade {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.fade-out {
+    opacity: 0;
+}
