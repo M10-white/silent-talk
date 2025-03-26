@@ -19,7 +19,6 @@ body {
     align-items: center;
     min-height: 100vh;
     position: relative;
-    /* Pour positionner le contrôle du volume */
 }
 
 /* ------------------------------------------------------------------
@@ -144,7 +143,6 @@ input[type="text"] {
     border: 1px solid #ccc;
 }
 
-/* Style pour le titre "Publicité" avec transparence */
 #ad-container h2 {
     font-size: 1.2em;
     opacity: 0.7;

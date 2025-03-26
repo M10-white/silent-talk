@@ -1,12 +1,14 @@
-/**************************************************************
- * script.js
- * - La musique démarre après le clic sur "Commencer"
- * - Le contrôle du volume est en bas à droite
- * - La publicité change dès le clic sur "Commencer" et à chaque question
- **************************************************************/
-
-// Tableau d'objets représentant les questions
 const questions = [
+  {
+    titre: "[Nom]",
+    texte: "Es-tu prêt à découvrir quel type de personne tu es ?",
+    reponses: [
+      "Bien sûr que oui !",
+      "Oui",
+      "Carrément !"
+    ],
+    type: "radio"
+  },
   {
     titre: "Question 1",
     texte: "Lequel des appareils connectés possédez-vous actuellement ?",
@@ -45,7 +47,6 @@ const questions = [
   }
 ];
 
-// Tableau des images de publicité pour l'écran de questions
 const adImages = [
   "assets/img/864.jpg",
   "assets/img/1023.jpg",
@@ -62,11 +63,9 @@ const adImages = [
   "assets/img/863.jpg"
 ];
 
-// Variables globales
 let indexQuestion = 0;
 let nomUtilisateur = "";
 
-// Sélection des éléments du DOM
 const introScreen       = document.getElementById("intro-screen");
 const introButton       = document.getElementById("intro-button");
 
@@ -85,65 +84,71 @@ const userNameDisplay   = document.getElementById("user-name-display");
 
 const adImage           = document.getElementById("ad-image");
 
-// Musique de fond et contrôle du volume
 const bgMusic           = document.getElementById("bg-music");
 const volumeSlider      = document.getElementById("volume-slider");
 
-// --- Ajuster le volume via le slider ---
+const clickSound        = document.getElementById("click-sound");
+const typingSound       = document.getElementById("typing-sound");
+
+function playClickSound() {
+  clickSound.currentTime = 0;
+  clickSound.play();
+}
+
+function playTypingSound() {
+  typingSound.currentTime = 0;
+  typingSound.play();
+}
+
 volumeSlider.addEventListener("input", () => {
   bgMusic.volume = volumeSlider.value;
 });
 
-// --- Écran d’introduction : bouton "Commencer" ---
+inputNom.addEventListener("keydown", playTypingSound);
+
 introButton.addEventListener("click", () => {
-  // Lancer la musique de fond
+  playClickSound();
+
   bgMusic.play().catch((err) => {
     console.log("Lecture audio bloquée :", err);
   });
 
-  // Dès le clic, changer la publicité pour la première image du tableau adImages
   if (adImages.length > 0) {
     adImage.src = adImages[0];
   }
 
-  // Animation fade-out sur l'écran d'intro
   introScreen.classList.add("fade-out");
   setTimeout(() => {
     introScreen.classList.add("hidden");
     introScreen.classList.remove("fade-out");
 
-    // Afficher l'écran de saisie du nom
     nameScreen.classList.remove("hidden");
   }, 500);
 });
 
-// --- Écran de saisie du nom : bouton "Valider" ---
 validateNameBtn.addEventListener("click", () => {
+  playClickSound();
   nomUtilisateur = inputNom.value.trim();
   if (nomUtilisateur === "") {
     alert("Veuillez saisir votre nom pour continuer.");
     return;
   }
 
-  // Animation fade-out sur l'écran du nom
   nameScreen.classList.add("fade-out");
   setTimeout(() => {
     nameScreen.classList.add("hidden");
     nameScreen.classList.remove("fade-out");
 
-    // Afficher l'écran de questions et la première question
     questionsScreen.classList.remove("hidden");
     afficherQuestion(indexQuestion);
   }, 500);
 });
 
-// --- Bouton "Suivant" : passer à la question suivante ---
 nextButton.addEventListener("click", () => {
-  // Récupérer les réponses sélectionnées (optionnel)
+  playClickSound();
   const reponsesSelectionnees = getSelectedAnswers();
   console.log(`Réponses question ${indexQuestion + 1} :`, reponsesSelectionnees);
 
-  // Animation fade-out sur l'écran de questions
   questionsScreen.classList.add("fade-out");
   setTimeout(() => {
     questionsScreen.classList.remove("fade-out");
@@ -156,16 +161,19 @@ nextButton.addEventListener("click", () => {
   }, 500);
 });
 
-// --- Afficher une question ---
 function afficherQuestion(indice) {
   const questionActuelle = questions[indice];
-  questionTitle.textContent = questionActuelle.titre;
+  
+  if (indice === 0) {
+    questionTitle.textContent = nomUtilisateur + "...";
+  } else {
+    questionTitle.textContent = questionActuelle.titre;
+  }
+  
   questionText.textContent  = questionActuelle.texte;
 
-  // Vider le conteneur des réponses
   answersContainer.innerHTML = "";
 
-  // Créer les options de réponse (radio ou checkbox)
   questionActuelle.reponses.forEach((reponse) => {
     const label = document.createElement("label");
     label.classList.add("answer-option");
@@ -174,6 +182,8 @@ function afficherQuestion(indice) {
     input.type = questionActuelle.type;
     input.name = "question_" + indice; 
     input.value = reponse;
+
+    input.addEventListener("click", playClickSound);
 
     const textNode = document.createTextNode(" " + reponse);
     label.appendChild(input);
@@ -184,7 +194,6 @@ function afficherQuestion(indice) {
   adImage.src = adImages[(indice + 1) % adImages.length];
 }
 
-// --- Récupérer les réponses sélectionnées ---
 function getSelectedAnswers() {
   const inputs = answersContainer.querySelectorAll("input");
   const selected = [];
@@ -196,7 +205,6 @@ function getSelectedAnswers() {
   return selected;
 }
 
-// --- Afficher l'écran final ---
 function afficherEcranFinal() {
   questionsScreen.classList.add("hidden");
   userNameDisplay.textContent = nomUtilisateur;
