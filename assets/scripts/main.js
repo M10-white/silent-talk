@@ -1,14 +1,11 @@
-const bgMusic = document.getElementById("bg-music");
+/**************************************************************
+ * script.js
+ * - La musique démarre après le clic sur "Commencer"
+ * - Le contrôle du volume est en bas à droite
+ * - La publicité change dès le clic sur "Commencer" et à chaque question
+ **************************************************************/
 
-introButton.addEventListener("click", () => {
-  bgMusic.play()
-    .then(() => {
-      console.log("Musique lancée !");
-    })
-    .catch((error) => {
-      console.log("Lecture audio bloquée :", error);
-    });
-
+// Tableau d'objets représentant les questions
 const questions = [
   {
     titre: "Question 1",
@@ -48,6 +45,7 @@ const questions = [
   }
 ];
 
+// Tableau des images de publicité pour l'écran de questions
 const adImages = [
   "assets/img/864.jpg",
   "assets/img/1023.jpg",
@@ -64,9 +62,11 @@ const adImages = [
   "assets/img/863.jpg"
 ];
 
+// Variables globales
 let indexQuestion = 0;
 let nomUtilisateur = "";
 
+// Sélection des éléments du DOM
 const introScreen       = document.getElementById("intro-screen");
 const introButton       = document.getElementById("intro-button");
 
@@ -85,17 +85,39 @@ const userNameDisplay   = document.getElementById("user-name-display");
 
 const adImage           = document.getElementById("ad-image");
 
-introButton.addEventListener("click", () => {
-  introScreen.classList.add("fade-out");
+// Musique de fond et contrôle du volume
+const bgMusic           = document.getElementById("bg-music");
+const volumeSlider      = document.getElementById("volume-slider");
 
+// --- Ajuster le volume via le slider ---
+volumeSlider.addEventListener("input", () => {
+  bgMusic.volume = volumeSlider.value;
+});
+
+// --- Écran d’introduction : bouton "Commencer" ---
+introButton.addEventListener("click", () => {
+  // Lancer la musique de fond
+  bgMusic.play().catch((err) => {
+    console.log("Lecture audio bloquée :", err);
+  });
+
+  // Dès le clic, changer la publicité pour la première image du tableau adImages
+  if (adImages.length > 0) {
+    adImage.src = adImages[0];
+  }
+
+  // Animation fade-out sur l'écran d'intro
+  introScreen.classList.add("fade-out");
   setTimeout(() => {
     introScreen.classList.add("hidden");
     introScreen.classList.remove("fade-out");
 
+    // Afficher l'écran de saisie du nom
     nameScreen.classList.remove("hidden");
   }, 500);
 });
 
+// --- Écran de saisie du nom : bouton "Valider" ---
 validateNameBtn.addEventListener("click", () => {
   nomUtilisateur = inputNom.value.trim();
   if (nomUtilisateur === "") {
@@ -103,27 +125,28 @@ validateNameBtn.addEventListener("click", () => {
     return;
   }
 
+  // Animation fade-out sur l'écran du nom
   nameScreen.classList.add("fade-out");
-
   setTimeout(() => {
     nameScreen.classList.add("hidden");
     nameScreen.classList.remove("fade-out");
 
+    // Afficher l'écran de questions et la première question
     questionsScreen.classList.remove("hidden");
-
     afficherQuestion(indexQuestion);
   }, 500);
 });
 
+// --- Bouton "Suivant" : passer à la question suivante ---
 nextButton.addEventListener("click", () => {
+  // Récupérer les réponses sélectionnées (optionnel)
   const reponsesSelectionnees = getSelectedAnswers();
   console.log(`Réponses question ${indexQuestion + 1} :`, reponsesSelectionnees);
 
+  // Animation fade-out sur l'écran de questions
   questionsScreen.classList.add("fade-out");
-
   setTimeout(() => {
     questionsScreen.classList.remove("fade-out");
-
     indexQuestion++;
     if (indexQuestion < questions.length) {
       afficherQuestion(indexQuestion);
@@ -133,13 +156,16 @@ nextButton.addEventListener("click", () => {
   }, 500);
 });
 
+// --- Afficher une question ---
 function afficherQuestion(indice) {
   const questionActuelle = questions[indice];
   questionTitle.textContent = questionActuelle.titre;
   questionText.textContent  = questionActuelle.texte;
 
+  // Vider le conteneur des réponses
   answersContainer.innerHTML = "";
 
+  // Créer les options de réponse (radio ou checkbox)
   questionActuelle.reponses.forEach((reponse) => {
     const label = document.createElement("label");
     label.classList.add("answer-option");
@@ -150,15 +176,15 @@ function afficherQuestion(indice) {
     input.value = reponse;
 
     const textNode = document.createTextNode(" " + reponse);
-
     label.appendChild(input);
     label.appendChild(textNode);
     answersContainer.appendChild(label);
   });
 
-  adImage.src = adImages[indice % adImages.length];
+  adImage.src = adImages[(indice + 1) % adImages.length];
 }
 
+// --- Récupérer les réponses sélectionnées ---
 function getSelectedAnswers() {
   const inputs = answersContainer.querySelectorAll("input");
   const selected = [];
@@ -170,11 +196,9 @@ function getSelectedAnswers() {
   return selected;
 }
 
+// --- Afficher l'écran final ---
 function afficherEcranFinal() {
   questionsScreen.classList.add("hidden");
-
   userNameDisplay.textContent = nomUtilisateur;
   endScreen.classList.remove("hidden");
 }
-
-});

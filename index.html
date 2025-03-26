@@ -8,20 +8,24 @@
 </head>
 <body>
 
+  <!-- Conteneur principal -->
   <div id="main-container">
 
+    <!-- Conteneur du quiz (partie centrale) -->
     <div id="quiz-container">
       
+      <!-- Écran d’introduction -->
       <div id="intro-screen" class="screen">
         <h1>Bienvenue !</h1>
         <p>
-          Nous avons déterré un ancien quiz de personnalité qui devrait vous amuser.  
-          Il ne vous prendra qu’une dizaine de minutes.  
+          Nous avons déterré un ancien quiz de personnalité qui devrait vous amuser.
+          Il ne vous prendra qu’une dizaine de minutes.
         </p>
         <p>Prêt à découvrir de quoi il s’agit ?</p>
         <button id="intro-button">Commencer</button>
       </div>
 
+      <!-- Écran de saisie du nom -->
       <div id="name-screen" class="screen hidden fade">
         <h2>Avant de commencer...</h2>
         <p>Veuillez entrer votre nom :</p>
@@ -29,6 +33,7 @@
         <button id="validate-name-button">Valider</button>
       </div>
 
+      <!-- Écran de questions -->
       <div id="questions-screen" class="screen hidden fade">
         <h2 id="question-title"></h2>
         <p id="question-text"></p>
@@ -36,20 +41,28 @@
         <button id="next-button">Suivant</button>
       </div>
 
+      <!-- Écran final -->
       <div id="end-screen" class="screen hidden fade">
         <h2>Merci pour votre participation, <span id="user-name-display"></span> !</h2>
         <p>Nous espérons que ce quiz vous a plu.</p>
       </div>
-
     </div>
 
+    <!-- Conteneur pour la fausse publicité (côté droit) -->
     <div id="ad-container">
       <img id="ad-image" src="assets/img/18969441.jpg" alt="Publicité" />
+      <h2>Publicité</h2>
     </div>
+  </div>
 
+  <audio id="bg-music" src="assets/audio/bg.mp3" loop></audio>
+
+  <!-- Contrôle du volume en bas à droite -->
+  <div id="volume-control">
+    <label for="volume-slider">Volume&nbsp;:</label>
+    <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="1">
   </div>
 
   <script src="assets/scripts/main.js"></script>
-  <audio id="bg-music" src="audio/ambiance.mp3" loop></audio>
 </body>
 </html>
