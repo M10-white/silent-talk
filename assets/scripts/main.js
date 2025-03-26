@@ -1,3 +1,14 @@
+const bgMusic = document.getElementById("bg-music");
+
+introButton.addEventListener("click", () => {
+  bgMusic.play()
+    .then(() => {
+      console.log("Musique lancée !");
+    })
+    .catch((error) => {
+      console.log("Lecture audio bloquée :", error);
+    });
+
 const questions = [
   {
     titre: "Question 1",
@@ -38,7 +49,19 @@ const questions = [
 ];
 
 const adImages = [
-
+  "assets/img/864.jpg",
+  "assets/img/1023.jpg",
+  "assets/img/1104.jpg",
+  "assets/img/18966674.jpg",
+  "assets/img/18969441.jpg",
+  "assets/img/36783.jpg",
+  "assets/img/18935571.jpg",
+  "assets/img/36802.jpg",
+  "assets/img/18966730.jpg",
+  "assets/img/1026.jpg",
+  "assets/img/867.jpg",
+  "assets/img/18966824.jpg",
+  "assets/img/863.jpg"
 ];
 
 let indexQuestion = 0;
@@ -153,3 +176,5 @@ function afficherEcranFinal() {
   userNameDisplay.textContent = nomUtilisateur;
   endScreen.classList.remove("hidden");
 }
+
+});
