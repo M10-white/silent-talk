@@ -5,7 +5,7 @@ const questions = [
     reponses: [
       "Bien sûr que oui !",
       "Oui",
-      "Carrément !"
+      "Non !"
     ],
     type: "radio"
   },
@@ -89,6 +89,7 @@ const volumeSlider      = document.getElementById("volume-slider");
 
 const clickSound        = document.getElementById("click-sound");
 const typingSound       = document.getElementById("typing-sound");
+const bugSound    = document.getElementById("bug-sound");
 
 function playClickSound() {
   clickSound.currentTime = 0;
@@ -177,17 +178,49 @@ function afficherQuestion(indice) {
   questionActuelle.reponses.forEach((reponse) => {
     const label = document.createElement("label");
     label.classList.add("answer-option");
-
+  
     const input = document.createElement("input");
     input.type = questionActuelle.type;
     input.name = "question_" + indice; 
     input.value = reponse;
-
+  
     input.addEventListener("click", playClickSound);
-
-    const textNode = document.createTextNode(" " + reponse);
+  
+    const spanText = document.createElement("span");
+    spanText.classList.add("answer-text");
+    spanText.textContent = " " + reponse;
+  
+    if (reponse === "Non !") {
+      const mouseEnterHandler = () => {
+        if (spanText.textContent.trim() === "Non !") {
+          bugSound.currentTime = 0;
+          bugSound.play();
+  
+          document.body.classList.add("glitch-screen");
+  
+          adImage.src = "assets/img/129055.gif";
+  
+          setTimeout(() => {
+            document.body.classList.remove("glitch-screen");
+            adImage.src = adImages[(indice + 1) % adImages.length];
+          }, 500);
+  
+          spanText.classList.add("shake-effect");
+          spanText.style.textDecoration = "line-through";
+  
+          setTimeout(() => {
+            spanText.textContent = " Carrément !!!";
+            spanText.style.textDecoration = "none";
+            spanText.classList.remove("shake-effect");
+            spanText.removeEventListener("mouseenter", mouseEnterHandler);
+          }, 500);
+        }
+      };
+      spanText.addEventListener("mouseenter", mouseEnterHandler);
+    }
+  
     label.appendChild(input);
-    label.appendChild(textNode);
+    label.appendChild(spanText);
     answersContainer.appendChild(label);
   });
 
