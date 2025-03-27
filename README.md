@@ -38,7 +38,7 @@ git clone https://github.com/M10-white/silent-talk.git
 
 Ce projet a été développé par un système automatisé dans le but d'explorer de manière ludique la personnalité des utilisateurs. Si certaines répétitions ou incohérences apparaissent dans le texte, considérez-les comme des particularités du système ou n'hésitez pas à le signalé ... ***: )***
 
-***H***ésitez ***P***as à votre ***L***iberté ***P***ersonnelle
+***H***ésit***E***z pas à votre ***L***iberté ***P***ersonnelle
 
 ## Licence
 
