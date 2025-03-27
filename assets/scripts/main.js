@@ -35,13 +35,157 @@ const questions = [
   },
   {
     titre: "Question 3",
-    texte: "Quelle est votre boisson préférée ?",
+    texte: "Quel est ton moment de la journée préféré ?",
     reponses: [
-      "Café",
-      "Thé",
-      "Soda",
-      "Eau",
-      "Autre"
+      "Matin",
+      "Après-midi",
+      "Soir",
+      "Nuit",
+      "Aucune préférence"
+    ],
+    type: "radio"
+  },
+  {
+    titre: "Question 4",
+    texte: "Comment prends-tu tes décisions ?",
+    reponses: [
+      "De manière spontanée",
+      "Après mûre réflexion",
+      "En demandant l'avis des autres",
+      "Suivant mon intuition",
+      "Je laisse les choses se faire"
+    ],
+    type: "radio"
+  },
+  {
+    titre: "Question 5",
+    texte: "Quel environnement t'inspire le plus ?",
+    reponses: [
+      "La nature",
+      "La ville",
+      "L'océan",
+      "La montagne",
+      "Un endroit calme et isolé"
+    ],
+    type: "radio"
+  },
+  {
+    titre: "Question 6",
+    texte: "Comment décrirais-tu ton style de communication ?",
+    reponses: [
+      "Direct et franc",
+      "Chaleureux et empathique",
+      "Réservé et réfléchi",
+      "Dynamique et expressif",
+      "Éclectique"
+    ],
+    type: "radio"
+  },
+  {
+    titre: "Question 7",
+    texte: "Comment réagis-tu face au stress ?",
+    reponses: [
+      "Je reste calme et réfléchi",
+      "Je deviens anxieux(se)",
+      "Je cherche du soutien auprès des autres",
+      "Je me réfugie dans mes passions",
+      "Je prends du recul"
+    ],
+    type: "radio"
+  },
+  {
+    titre: "Question 8",
+    texte: "Quelle importance accordes-tu à la créativité dans ta vie ?",
+    reponses: [
+      "Extrêmement importante",
+      "Plutôt importante",
+      "Moyennement",
+      "Peu importante",
+      "Pas du tout importante"
+    ],
+    type: "radio"
+  },
+  {
+    titre: "Question 9",
+    texte: "Comment te décrirais-tu en quelques mots ?",
+    reponses: [
+      "Optimiste",
+      "Pragmatique",
+      "Intuitif(ve)",
+      "Réfléchi(e)",
+      "Aventurier(ère)"
+    ],
+    type: "radio"
+  },
+  {
+    titre: "Question 10",
+    texte: "Que recherches-tu dans tes relations interpersonnelles ?",
+    reponses: [
+      "La loyauté",
+      "La passion",
+      "La compréhension",
+      "L'humour",
+      "La stabilité"
+    ],
+    type: "radio"
+  },
+  {
+    titre: "Question 11",
+    texte: "Quelle activité préfères-tu pour te détendre ?",
+    reponses: [
+      "Lire un livre",
+      "Regarder un film",
+      "Faire du sport",
+      "Méditer",
+      "Sortir entre amis"
+    ],
+    type: "radio"
+  },
+  {
+    titre: "Question 12",
+    texte: "Quel est ton rapport au risque ?",
+    reponses: [
+      "J'aime prendre des risques",
+      "Je suis prudent(e)",
+      "Je suis équilibré(e)",
+      "Je préfère la sécurité",
+      "Je prends des risques calculés"
+    ],
+    type: "radio"
+  },
+  {
+    titre: "Question 13",
+    texte: "Comment décrirais-tu ton mode de vie ?",
+    reponses: [
+      "Organisé et planifié",
+      "Spontané et flexible",
+      "Axé sur les routines",
+      "Toujours à la recherche de nouveautés",
+      "Équilibré"
+    ],
+    type: "radio"
+  },
+  {
+    titre: "Question 14",
+    texte: "Qu'est-ce qui te motive le plus dans la vie ?",
+    reponses: [
+      "Le succès",
+      "Les relations humaines",
+      "La découverte",
+      "L'apprentissage",
+      "La contribution à la société"
+    ],
+    type: "radio"
+  },
+  {
+    titre: "Question 15",
+    texte: "Comment décrirais-tu ta manière de gérer les imprévus ?",
+    reponses: [
+      "Je m'adapte rapidement",
+      "Je planifie pour éviter les surprises",
+      "Je reste calme et analyse la situation",
+      "Je fais appel à mon intuition",
+      "Je laisse les choses suivre leur cours"
     ],
     type: "radio"
   }
