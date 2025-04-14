@@ -299,6 +299,9 @@ nextButton.addEventListener("click", () => {
     questionsScreen.classList.remove("fade-out");
     indexQuestion++;
     if (indexQuestion < questions.length) {
+      if (typeof triggerRandomHorrorEffect === "function") {
+        triggerRandomHorrorEffect();
+      }
       afficherQuestion(indexQuestion);
     } else {
       afficherEcranFinal();
@@ -356,18 +359,19 @@ function afficherQuestion(indice) {
             spanText.textContent = " Carrément !!!";
             spanText.style.textDecoration = "none";
             spanText.classList.remove("shake-effect");
-            spanText.removeEventListener("mouseenter", mouseEnterHandler);
+  
+            label.removeEventListener("mouseenter", mouseEnterHandler);
           }, 500);
         }
       };
-      spanText.addEventListener("mouseenter", mouseEnterHandler);
+  
+      label.addEventListener("mouseenter", mouseEnterHandler);
     }
   
     label.appendChild(input);
     label.appendChild(spanText);
     answersContainer.appendChild(label);
   });
-
   adImage.src = adImages[(indice + 1) % adImages.length];
 }
 
