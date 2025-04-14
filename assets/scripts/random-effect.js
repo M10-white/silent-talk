@@ -45,70 +45,75 @@ function getDifferentRandomIndex(n, lastIndex) {
 /**************************************************************
  * Fonction pour déclencher aléatoirement un effet d'horreur
  **************************************************************/
+// Assurez-vous que meltSound est défini
+const meltSound = document.getElementById("melt-sound");
+
 function triggerRandomHorrorEffect() {
-    // Avec une chance par exemple de 50% (ici condition forcée à true pour le test)
-    if (Math.random() < 1) {
-      // 1. Effet visuel : simulateur "melt" sur l'écran
-      if (!visualEffectUsed) {
-        // Au lieu de "glitch-screen", on utilise "screen-melt"
-        document.body.classList.add("screen-melt");
-        visualEffectUsed = true;
-        // Jouer le son de melting (assurez-vous que meltSound est défini)
-        meltSound.currentTime = 0;
-        meltSound.play();
-      } else {
-        // Si l'effet melt a déjà été activé, on joue un son d'horreur choisi dans celui des pubs, différent du précédent.
-        let soundAdIdx = getDifferentRandomIndex(horrorAdSounds.length, lastHorrorAdSoundIndex);
-        lastHorrorAdSoundIndex = soundAdIdx;
-        horrorAdSounds[soundAdIdx].currentTime = 0;
-        horrorAdSounds[soundAdIdx].play();
-      }
-  
-      // 2. Changement temporaire de l'image de publicité
-      let availableAdIndices = [];
-      for (let i = 0; i < horrorAdImages.length; i++) {
-        if (!usedHorrorAdImageIndices.includes(i)) {
-          availableAdIndices.push(i);
-        }
-      }
-      if (availableAdIndices.length === 0) {
-        usedHorrorAdImageIndices = [];
-        availableAdIndices = [...Array(horrorAdImages.length).keys()];
-      }
-      let adIndex = availableAdIndices[Math.floor(Math.random() * availableAdIndices.length)];
-      usedHorrorAdImageIndices.push(adIndex);
-      adImage.src = horrorAdImages[adIndex];
+  // Pour l'exemple, on déclenche toujours l'effet (vous pouvez ajuster la condition)
+  if (Math.random() < 0.3) {
+    // 1. Effet visuel "melt"
+    if (!visualEffectUsed) {
+      // Ajoute la classe "screen-melt" pour déclencher l'animation
+      document.body.classList.add("screen-melt");
+      visualEffectUsed = true;
+      // Jouer le son de melting
+      meltSound.currentTime = 0;
+      meltSound.play().catch(e => console.log("Erreur lors de la lecture du son melt :", e));
+    } else {
+      // Si l'effet visuel a déjà été activé, jouer un autre son d'horreur (choisi aléatoirement)
       let soundAdIdx = getDifferentRandomIndex(horrorAdSounds.length, lastHorrorAdSoundIndex);
       lastHorrorAdSoundIndex = soundAdIdx;
       horrorAdSounds[soundAdIdx].currentTime = 0;
       horrorAdSounds[soundAdIdx].play();
-  
-      // 3. Remplacement temporaire de la question par une question d'horreur
-      let availableQuestionIndices = [];
-      for (let j = 0; j < horrorQuestions.length; j++) {
-        if (!usedHorrorQuestionIndices.includes(j)) {
-          availableQuestionIndices.push(j);
-        }
+    }
+
+    // 2. Changement temporaire de l'image de publicité
+    let availableAdIndices = [];
+    for (let i = 0; i < horrorAdImages.length; i++) {
+      if (!usedHorrorAdImageIndices.includes(i)) {
+        availableAdIndices.push(i);
       }
-      if (availableQuestionIndices.length === 0) {
-        usedHorrorQuestionIndices = [];
-        availableQuestionIndices = [...Array(horrorQuestions.length).keys()];
+    }
+    if (availableAdIndices.length === 0) {
+      usedHorrorAdImageIndices = [];
+      availableAdIndices = [...Array(horrorAdImages.length).keys()];
+    }
+    let adIndex = availableAdIndices[Math.floor(Math.random() * availableAdIndices.length)];
+    usedHorrorAdImageIndices.push(adIndex);
+    // Changer temporairement l'image de pub par une image d'horreur
+    adImage.src = horrorAdImages[adIndex];
+    let soundAdIdx = getDifferentRandomIndex(horrorAdSounds.length, lastHorrorAdSoundIndex);
+    lastHorrorAdSoundIndex = soundAdIdx;
+    horrorAdSounds[soundAdIdx].currentTime = 0;
+    horrorAdSounds[soundAdIdx].play();
+
+    // 3. Remplacement temporaire du texte de la question par un message d'horreur
+    let availableQuestionIndices = [];
+    for (let j = 0; j < horrorQuestions.length; j++) {
+      if (!usedHorrorQuestionIndices.includes(j)) {
+        availableQuestionIndices.push(j);
       }
-      let qIndex = availableQuestionIndices[Math.floor(Math.random() * availableQuestionIndices.length)];
-      usedHorrorQuestionIndices.push(qIndex);
-      const originalQuestionText = questionText.textContent;
-      questionText.textContent = horrorQuestions[qIndex];
-      let soundQIdx = getDifferentRandomIndex(horrorQuestionSounds.length, lastHorrorQuestionSoundIndex);
-      lastHorrorQuestionSoundIndex = soundQIdx;
-      horrorQuestionSounds[soundQIdx].currentTime = 0;
-      horrorQuestionSounds[soundQIdx].play();
-  
-      // Après 1 seconde, rétablir les éléments originaux
-      setTimeout(() => {
+    }
+    if (availableQuestionIndices.length === 0) {
+      usedHorrorQuestionIndices = [];
+      availableQuestionIndices = [...Array(horrorQuestions.length).keys()];
+    }
+    let qIndex = availableQuestionIndices[Math.floor(Math.random() * availableQuestionIndices.length)];
+    usedHorrorQuestionIndices.push(qIndex);
+    const originalQuestionText = questionText.textContent;
+    questionText.textContent = horrorQuestions[qIndex];
+    let soundQIdx = getDifferentRandomIndex(horrorQuestionSounds.length, lastHorrorQuestionSoundIndex);
+    lastHorrorQuestionSoundIndex = soundQIdx;
+    horrorQuestionSounds[soundQIdx].currentTime = 0;
+    horrorQuestionSounds[soundQIdx].play();
+
+    // Après 1 seconde, rétablir les éléments originaux
+    setTimeout(() => {
         if (document.body.classList.contains("screen-melt")) {
           document.body.classList.remove("screen-melt");
         }
         questionText.textContent = originalQuestionText;
+        visualEffectUsed = false;
       }, 1000);
-    }
-  }  
+  }
+}
