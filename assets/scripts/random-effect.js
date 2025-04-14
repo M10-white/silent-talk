@@ -46,79 +46,69 @@ function getDifferentRandomIndex(n, lastIndex) {
  * Fonction pour déclencher aléatoirement un effet d'horreur
  **************************************************************/
 function triggerRandomHorrorEffect() {
-  // Avec une chance par exemple de 50%
-  if (Math.random() < 1) {
-    // 1. Effet visuel (glitch sur l'écran)
-    if (!visualEffectUsed) {
-      document.body.classList.add("glitch-screen");
-      visualEffectUsed = true;
-      // On joue un son d'horreur pour le visuel (ici on peut réutiliser bugSound ou un son dédié)
-      // Pour cet exemple, nous réutilisons bugSound (déjà défini dans votre code)
-      bugSound.currentTime = 0;
-      bugSound.play();
-    } else {
-      // Si l'effet visuel a déjà été activé, on ne le réactive pas,
-      // mais on joue un son d'horreur choisi dans celui des pubs, différent du précédent.
+    // Avec une chance par exemple de 50% (ici condition forcée à true pour le test)
+    if (Math.random() < 1) {
+      // 1. Effet visuel : simulateur "melt" sur l'écran
+      if (!visualEffectUsed) {
+        // Au lieu de "glitch-screen", on utilise "screen-melt"
+        document.body.classList.add("screen-melt");
+        visualEffectUsed = true;
+        // Jouer le son de melting (assurez-vous que meltSound est défini)
+        meltSound.currentTime = 0;
+        meltSound.play();
+      } else {
+        // Si l'effet melt a déjà été activé, on joue un son d'horreur choisi dans celui des pubs, différent du précédent.
+        let soundAdIdx = getDifferentRandomIndex(horrorAdSounds.length, lastHorrorAdSoundIndex);
+        lastHorrorAdSoundIndex = soundAdIdx;
+        horrorAdSounds[soundAdIdx].currentTime = 0;
+        horrorAdSounds[soundAdIdx].play();
+      }
+  
+      // 2. Changement temporaire de l'image de publicité
+      let availableAdIndices = [];
+      for (let i = 0; i < horrorAdImages.length; i++) {
+        if (!usedHorrorAdImageIndices.includes(i)) {
+          availableAdIndices.push(i);
+        }
+      }
+      if (availableAdIndices.length === 0) {
+        usedHorrorAdImageIndices = [];
+        availableAdIndices = [...Array(horrorAdImages.length).keys()];
+      }
+      let adIndex = availableAdIndices[Math.floor(Math.random() * availableAdIndices.length)];
+      usedHorrorAdImageIndices.push(adIndex);
+      adImage.src = horrorAdImages[adIndex];
       let soundAdIdx = getDifferentRandomIndex(horrorAdSounds.length, lastHorrorAdSoundIndex);
       lastHorrorAdSoundIndex = soundAdIdx;
       horrorAdSounds[soundAdIdx].currentTime = 0;
       horrorAdSounds[soundAdIdx].play();
-    }
-
-    // 2. Changement temporaire de l'image de publicité
-    // Sélectionner parmi les images disponibles celles qui n'ont pas encore été affichées
-    let availableAdIndices = [];
-    for (let i = 0; i < horrorAdImages.length; i++) {
-      if (!usedHorrorAdImageIndices.includes(i)) {
-        availableAdIndices.push(i);
+  
+      // 3. Remplacement temporaire de la question par une question d'horreur
+      let availableQuestionIndices = [];
+      for (let j = 0; j < horrorQuestions.length; j++) {
+        if (!usedHorrorQuestionIndices.includes(j)) {
+          availableQuestionIndices.push(j);
+        }
       }
-    }
-    // Si toutes ont été utilisées, on réinitialise la liste
-    if (availableAdIndices.length === 0) {
-      usedHorrorAdImageIndices = [];
-      availableAdIndices = [...Array(horrorAdImages.length).keys()];
-    }
-    let adIndex = availableAdIndices[Math.floor(Math.random() * availableAdIndices.length)];
-    usedHorrorAdImageIndices.push(adIndex);
-    // Changer l'image de publicité
-    adImage.src = horrorAdImages[adIndex];
-    // Jouer un son d'horreur pour cet effet, différent du précédent
-    let soundAdIdx = getDifferentRandomIndex(horrorAdSounds.length, lastHorrorAdSoundIndex);
-    lastHorrorAdSoundIndex = soundAdIdx;
-    horrorAdSounds[soundAdIdx].currentTime = 0;
-    horrorAdSounds[soundAdIdx].play();
-
-    // 3. Remplacement temporaire de la question
-    // Sélectionner une question d'horreur parmi celles non affichées
-    let availableQuestionIndices = [];
-    for (let j = 0; j < horrorQuestions.length; j++) {
-      if (!usedHorrorQuestionIndices.includes(j)) {
-        availableQuestionIndices.push(j);
+      if (availableQuestionIndices.length === 0) {
+        usedHorrorQuestionIndices = [];
+        availableQuestionIndices = [...Array(horrorQuestions.length).keys()];
       }
+      let qIndex = availableQuestionIndices[Math.floor(Math.random() * availableQuestionIndices.length)];
+      usedHorrorQuestionIndices.push(qIndex);
+      const originalQuestionText = questionText.textContent;
+      questionText.textContent = horrorQuestions[qIndex];
+      let soundQIdx = getDifferentRandomIndex(horrorQuestionSounds.length, lastHorrorQuestionSoundIndex);
+      lastHorrorQuestionSoundIndex = soundQIdx;
+      horrorQuestionSounds[soundQIdx].currentTime = 0;
+      horrorQuestionSounds[soundQIdx].play();
+  
+      // Après 1 seconde, rétablir les éléments originaux
+      setTimeout(() => {
+        if (document.body.classList.contains("screen-melt")) {
+          document.body.classList.remove("screen-melt");
+        }
+        questionText.textContent = originalQuestionText;
+      }, 1000);
     }
-    if (availableQuestionIndices.length === 0) {
-      usedHorrorQuestionIndices = [];
-      availableQuestionIndices = [...Array(horrorQuestions.length).keys()];
-    }
-    let qIndex = availableQuestionIndices[Math.floor(Math.random() * availableQuestionIndices.length)];
-    usedHorrorQuestionIndices.push(qIndex);
-    // Sauvegarder le texte original pour le rétablir après l'effet
-    const originalQuestionText = questionText.textContent;
-    // Remplacer temporairement le texte de la question
-    questionText.textContent = horrorQuestions[qIndex];
-    // Jouer un son d'horreur pour ce remplacement, différent du précédent
-    let soundQIdx = getDifferentRandomIndex(horrorQuestionSounds.length, lastHorrorQuestionSoundIndex);
-    lastHorrorQuestionSoundIndex = soundQIdx;
-    horrorQuestionSounds[soundQIdx].currentTime = 0;
-    horrorQuestionSounds[soundQIdx].play();
-
-    // Après 1 seconde, rétablir les éléments originaux
-    setTimeout(() => {
-      // Si l'effet visuel était activé, on retire le glitch
-      if (document.body.classList.contains("glitch-screen")) {
-        document.body.classList.remove("glitch-screen");
-      }
-      questionText.textContent = originalQuestionText;
-    }, 1000);
-  }
-}
+  }  
