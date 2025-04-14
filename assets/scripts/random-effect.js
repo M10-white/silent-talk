@@ -47,7 +47,7 @@ function getDifferentRandomIndex(n, lastIndex) {
  **************************************************************/
 function triggerRandomHorrorEffect() {
   // Avec une chance par exemple de 50%
-  if (Math.random() < 0.5) {
+  if (Math.random() < 1) {
     // 1. Effet visuel (glitch sur l'écran)
     if (!visualEffectUsed) {
       document.body.classList.add("glitch-screen");
